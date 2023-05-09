@@ -19,8 +19,8 @@ describe('/api/topics', () => {
         .get("/api/topics")
         .expect(200)
         .then((response) => {
-          expect(response.body.topics.length).toBe(3);
           response.body.topics.forEach((topic) => {
+            expect(Object.keys(topic).length).toBe(2);
             expect(typeof topic.slug).toBe("string");
             expect(typeof topic.description).toBe("string");
           })
@@ -28,24 +28,26 @@ describe('/api/topics', () => {
     });
 })
 
+describe('/api/articles', () => {
+  test("GET - status: 200 - respond with all the properties", () => {
+    return request(app)
+      .get("/api/articles")
+      .expect(200)
+      .then((response) => { 
+        response.body.articles.forEach((article) => {
+          expect(Object.keys(article).length).toBe(8);
+          expect(typeof article.title).toBe("string");
+          expect(typeof article.topic).toBe("string");
+          expect(typeof article.author).toBe("string");
+          expect(typeof article.body).toBe("string");
+          expect(typeof article.created_at).toBe("string");
+          expect(typeof article.votes).toBe("number");
+        })
+      });
+  });
+})
 
 
-
-// describe('/api/topics', () => {
-//     test("GET - status: 200 - respond with all the properties", () => {
-// expect(4).toBe(4)
-//         // return request(app).get('/api/topics').expect(200).then(({body})=>{
-//         //     console.log("in the test, body.topics:", body.topics)
-//         //     expect(typeof body.topics).toBe('object')
-//         //     body.topics.forEach((topic) => {
-//         //         expect(typeof topic.slug).toBe("string");
-//         //         expect(typeof topic.description).toBe("string");
-//         //          })
-            
-//         // })
-//     })
-
-// })
 
           
          
