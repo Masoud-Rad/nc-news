@@ -78,6 +78,38 @@ describe('/api/articles/:article_id', () => {
 })
 
 
+describe('/api/articles/:article_id/comments', () => {
+  test("GET - status: 200 - respond with all the properties", () => {
+    return request(app)
+      .get("/api/articles/1/comments")
+      .expect(200)
+      .then((response) => { 
+        response.body.comments.forEach((comment) => {
+          expect(Object.keys(comment).length).toBe(6);
+          expect(typeof comment.comment_id).toBe("number");
+          expect(typeof comment.votes).toBe("number");
+          expect(typeof comment.created_at).toBe("string");
+          expect(typeof comment.author).toBe("string");
+          expect(typeof comment.body).toBe("string");
+          expect(typeof comment.article_id).toBe("number");
+        })
+      })
+  });
+})
+
+describe('/api/articles/:article_id/comments', () => {
+  test("GET - status: 404 - respond with Not Found!", () => {
+    return request(app)
+        .get("/api/articles/6667/comments")
+        .expect(404)
+        .then((response) => { 
+          expect(response.body.msg).toBe("Not Found!")
+        });
+  });
+})
+
+
+
 
 describe('request with incorect Id', () => {
   test("GET - status: 404 - respond with Not Found!", () => {

@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
-const {getDescription, getTopics , getArticles, getArticlesById } = require ("./controllers/api.controllers")
+const {getDescription, getTopics , getArticles, getArticlesById, getComments } = require ("./controllers/api.controllers")
 
 
 
@@ -14,6 +14,8 @@ app.get("/api/articles",getArticles);
 
 app.get(`/api/articles/:article_id`,getArticlesById);
 
+app.get('/api/articles/:article_id/comments',getComments)
+
 app.use((error, req, res, next) => {
     if(error.code==="22P02")
     {
@@ -23,12 +25,16 @@ app.use((error, req, res, next) => {
     }
     
 })
-app.all("*", (req,res)=>{
-    res.status(404).send({ msg: "Not Found!" })
-})
+
+
 app.use((error, req, res, next) => {
     res.status(error.status).send({ msg: error.msg })
 })
+
+app.all("*", (req,res)=>{
+    res.status(404).send({ msg: "Not Found!" })
+})
+
 
 app.use((error, req, res, next) => {
     res.status(500).send({ msg: "Server Error!" })

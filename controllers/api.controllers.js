@@ -1,6 +1,7 @@
 const {selectTopics } = require('../models/topics.models')
 const {returnEndpoints} =  require('../models/api.models')
 const {selectArticles } = require('../models/articles.models')
+const {selectCommentsByArticleId}=require("../models/comments.models")
 
 
 
@@ -20,8 +21,6 @@ exports.getDescription = (req, res, next) => {
      })
  
 }
-
-
 
 exports.getTopics= (req,res, next)=>{
 
@@ -62,4 +61,17 @@ exports.getArticlesById= (req,res, next)=>{
 .catch((err) => {
           next(err)
        })
+}
+
+
+exports.getComments= (req,res,next)=>{
+    
+    const articleId= req.params.article_id;
+    selectCommentsByArticleId(articleId)
+    .then((comments)=>{
+                      res.status(200).send({ comments })
+                      })
+    .catch((err) => {
+                        next(err)
+                     })
 }
