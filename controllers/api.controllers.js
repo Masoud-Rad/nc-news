@@ -9,6 +9,7 @@ const {selectArticles } = require('../models/articles.models')
 
 exports.getDescription = (req, res, next) => {
  
+    
     returnEndpoints().then((endPoint)=>{
         
         res.status(200).send({ "available-endpoints": endPoint })
@@ -48,4 +49,17 @@ exports.getArticles = (req,res, next)=>{
                         next(err)
                      })
 
+}
+
+exports.getArticlesById= (req,res, next)=>{
+    const articleId= req.params.article_id
+   
+    selectArticles(articleId).then((article)=>{       
+
+        res.status(200).send({ article })
+
+      })
+.catch((err) => {
+          next(err)
+       })
 }

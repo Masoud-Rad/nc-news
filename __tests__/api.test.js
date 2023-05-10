@@ -29,7 +29,6 @@ describe('/api/topics', () => {
         .get("/api/topics")
         .expect(200)
         .then((response) => {
-          console.log("ressss:",response)
           response.body.topics.forEach((topic) => {
             expect(Object.keys(topic).length).toBe(2);
             expect(typeof topic.slug).toBe("string");
@@ -59,6 +58,38 @@ describe('/api/articles', () => {
 })
 
 
+describe('/api/articles/:article_id', () => {
+  test("GET - status: 200 - respond with all the properties", () => {
+    return request(app)
+      .get("/api/articles/3")
+      .expect(200)
+      .then((response) => { 
+        
+          expect(Object.keys(response.body.article).length).toBe(8);
+          expect(typeof response.body.article.title).toBe("string");
+          expect(typeof response.body.article.topic).toBe("string");
+          expect(typeof response.body.article.author).toBe("string");
+          expect(typeof response.body.article.body).toBe("string");
+          expect(typeof response.body.article.created_at).toBe("string");
+          expect(typeof response.body.article.votes).toBe("number");
+        
+      });
+  });
+})
+
+
+
+describe('request with incorect Id', () => {
+  test("GET - status: 404 - respond with Not Found!", () => {
+    return request(app)
+      .get("/api/articles/nnnn")
+      .expect(404)
+      .then((response) => { 
+        expect(typeof response).toBe('object');
+        expect(response.body.msg).toBe("Not Found!")
+      });
+  });
+}) 
 
 describe('incorect api', () => {
   test("GET - status: 404 - not exist", () => {
@@ -67,7 +98,7 @@ describe('incorect api', () => {
       .expect(404)
       .then((response) => { 
         expect(typeof response).toBe('object');
-        expect(response.body.msg).toBe("NOT FOUND!")
+        expect(response.body.msg).toBe("Not Found!")
       });
   });
 })       
