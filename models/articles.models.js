@@ -1,14 +1,9 @@
 const db = require('../db/connection');
 
-
-
-
-exports.selectTopics= ()=>{
+exports.selectArticles= ()=>{
 
     return db.query(`
-    SELECT * FROM topics;
+    SELECT * FROM articles;
     `).then(({rows})=>{return rows;} )
 
 }
-
-

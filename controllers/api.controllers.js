@@ -1,12 +1,23 @@
-const {selectTopics,selectArticles } = require('../models/topics.models')
+const {selectTopics } = require('../models/topics.models')
+const {returnEndpoints} =  require('../models/api.models')
+const {selectArticles } = require('../models/articles.models')
 
 
 
     
 
 
-exports.getDescription = (req, res) => {
-    res.status(200).send({ "description": "serves up a json representation of all the available endpoints of the api" })
+exports.getDescription = (req, res, next) => {
+ 
+    returnEndpoints().then((endPoint)=>{
+        
+        res.status(200).send({ "available-endpoints": endPoint })
+
+    }) 
+    .catch((err) => {
+        next(err)
+     })
+ 
 }
 
 
