@@ -4,6 +4,7 @@ const connection = require("../db/connection")
 const seed = require("../db/seeds/seed")
 
 const devData = require('../db/data/test-data/index');
+const { expect } = require("@jest/globals");
 
 
 
@@ -11,7 +12,16 @@ const devData = require('../db/data/test-data/index');
 beforeEach(() => seed(devData))
 afterAll(() => connection.end())
 
-
+describe('/api', () => {
+  test("GET - status: 200 - respond with all the properties", () => {
+    return request(app)
+      .get("/api")
+      .expect(200)
+      .then((response) => { 
+        expect(typeof response).toBe('object');
+      });
+  });
+})
 
 describe('/api/topics', () => {
     test("GET - status: 200 - respond with all the properties", () => {
@@ -19,6 +29,7 @@ describe('/api/topics', () => {
         .get("/api/topics")
         .expect(200)
         .then((response) => {
+          console.log("ressss:",response)
           response.body.topics.forEach((topic) => {
             expect(Object.keys(topic).length).toBe(2);
             expect(typeof topic.slug).toBe("string");
@@ -49,5 +60,15 @@ describe('/api/articles', () => {
 
 
 
-          
+describe('incorect api', () => {
+  test("GET - status: 404 - not exist", () => {
+    return request(app)
+      .get("/nonsence")
+      .expect(404)
+      .then((response) => { 
+        expect(typeof response).toBe('object');
+        expect(response.body.msg).toBe("NOT FOUND!")
+      });
+  });
+})       
          
