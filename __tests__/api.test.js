@@ -44,18 +44,33 @@ describe('/api/articles', () => {
       .get("/api/articles")
       .expect(200)
       .then((response) => { 
+       // console.log("artic:", response.body)
         response.body.articles.forEach((article) => {
           expect(Object.keys(article).length).toBe(8);
           expect(typeof article.title).toBe("string");
           expect(typeof article.topic).toBe("string");
           expect(typeof article.author).toBe("string");
-          expect(typeof article.body).toBe("string");
+          expect( article.hasOwnProperty('body')).toBe(false);
           expect(typeof article.created_at).toBe("string");
           expect(typeof article.votes).toBe("number");
+          expect(typeof article.comment_count).toBe("string");
         })
       });
   });
+
+//   test("GET - status: 200 - respond with all the properties", () => {
+//     return request(app)
+//       .get("/api/articles")
+//       .expect(200)
+//       .then((response) => { 
+//         response.body.articles.forEach((article) => {
+//         expect(article).toBeSordetBy("created_at")
+//         })
+//       })
+
 })
+
+
 
 
 describe('/api/articles/:article_id', () => {

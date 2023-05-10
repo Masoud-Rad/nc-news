@@ -1,6 +1,6 @@
 const {selectTopics } = require('../models/topics.models')
 const {returnEndpoints} =  require('../models/api.models')
-const {selectArticles } = require('../models/articles.models')
+const {selectArticles, selectArticlesBiId } = require('../models/articles.models')
 
 
 
@@ -54,7 +54,7 @@ exports.getArticles = (req,res, next)=>{
 exports.getArticlesById= (req,res, next)=>{
     const articleId= req.params.article_id
    
-    selectArticles(articleId).then((article)=>{       
+    selectArticlesBiId(articleId).then((article)=>{       
 
         res.status(200).send({ article })
 
