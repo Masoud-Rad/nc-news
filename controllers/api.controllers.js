@@ -3,12 +3,12 @@ const {selectTopics } = require('../models/topics.models')
 const {selectCommentsByArticleId, addComment}=require("../models/comments.models")
 const fs = require('fs/promises')
 
-const {selectArticles, selectArticlesBiId } = require('../models/articles.models')
+const {selectArticles, selectArticlesBiId,updateArticle } = require('../models/articles.models')
 
 
 
 
-    
+//-------------------------Get---------------------------------------------------------    
 
 
 exports.getDescription = (req, res, next) => {
@@ -95,5 +95,17 @@ exports.postComment=(req,res,next)=>{
     })
 }
 
+//---------------------------Patch-----------------------------------
 
+exports.patchArticle=(req,res,nest)=>{
+    const articleId = req.params.article_id;
+    const votesUpdate= req.body.inc_votes;
+    updateArticle(articleId, votesUpdate).then((updatedArticle)=>{
+        res.status(202).send({updatedArticle})
+    }) 
 
+    .catch((error)=>{
+        next(error);
+    })
+
+}

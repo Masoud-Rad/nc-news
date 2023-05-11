@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
-const {getDescription, getTopics , getArticles, getArticlesById, getComments, postComment } = require ("./controllers/api.controllers")
+const {getDescription, getTopics , getArticles, getArticlesById, getComments, postComment, patchArticle } = require ("./controllers/api.controllers")
 
 //----------------------------------------------Get-------------------------------------------------
 
@@ -20,7 +20,11 @@ app.get('/api/articles/:article_id/comments',getComments)
 
 app.post("/api/articles/:article_id/comments",postComment)
 
-//----------------------------------------------Error handeling-------------------------------------------------
+//----------------------------------------------Patch-------------------------------------------------
+
+app.patch('/api/articles/:article_id', patchArticle)
+
+//----------------------------------------------Error handeling---------------------------------------
 
 app.use((error, req, res, next) => {
     if(error.code==="22P02")

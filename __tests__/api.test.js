@@ -129,7 +129,7 @@ describe("POST-comment >>> /api/articles/:article_id/comments", () => {
           })
    })
 
-   test('POST- status: 201- responds with the added comment', () => {
+   test('POST- status: 203- responds with ...', () => {
     const newComment = {
         "body": "this is my test_add_comment body",
         "username": "Mas"
@@ -143,4 +143,40 @@ describe("POST-comment >>> /api/articles/:article_id/comments", () => {
 
         })
 })
+})
+
+
+
+describe("PATCH-Article >>> /api/articles/:article_id", () => {
+  test('PATCH- status: 202- responds with the updated article', () => {
+      const votesUpdate = { inc_votes : 1 };
+      return request(app)
+          .patch('/api/articles/2')
+          .send(votesUpdate).expect(202).then(({ body }) => {
+            expect(body.updatedArticle.votes).toBe(1);
+
+          })
+   })
+   test('PATCH- status: 202- responds with the updated article', () => {
+    const votesUpdate = { inc_votes : -5 };
+    return request(app)
+        .patch('/api/articles/1')
+        .send(votesUpdate).expect(202).then(({ body }) => {
+          expect(body.updatedArticle.votes).toBe(95);
+
+        })
+ })
+
+   test('PATCH- status: 404 - respond with Not Found!"', () => {
+    const votesUpdate = { inc_votes : -5 };
+    return request(app)
+        .post('/api/articles/nonsense')
+        .send(votesUpdate)
+        .expect(404)
+        .then(({ body }) => {
+           expect(body.msg).toBe("Not Found!");
+
+        })
+})
+
 })
