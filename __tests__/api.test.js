@@ -129,7 +129,8 @@ describe("POST-comment >>> /api/articles/:article_id/comments", () => {
           })
    })
 
-   test('POST- status: 203- responds with ...', () => {
+   test('POST- status: 203- responds with Non-Authoritative Information', () => {
+
     const newComment = {
         "body": "this is my test_add_comment body",
         "username": "Mas"
