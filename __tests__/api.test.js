@@ -44,7 +44,7 @@ describe.skip('/api/articles', () => {
       .get("/api/articles")
       .expect(200)
       .then((response) => { 
-        console.log("artic:", response.body)
+
         response.body.articles.forEach((article) => {
           expect(Object.keys(article).length).toBe(8);
           expect(typeof article.title).toBe("string");
@@ -59,13 +59,17 @@ describe.skip('/api/articles', () => {
   });
 
   test("GET - status: 200 - respond with all the properties", () => {
+
+ 
     return request(app)
       .get("/api/articles")
       .expect(200)
       .then((response) => { 
-        response.body.articles.forEach((article) => {
-        expect(article).toBeSordetBy("created_at")
-        })
+        
+       
+        expect(response.body.articles).toBeSortedBy("created_at", { descending: true})
+       
+
       })
 
 })
