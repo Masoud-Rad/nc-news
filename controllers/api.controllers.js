@@ -1,8 +1,7 @@
 const {selectTopics } = require('../models/topics.models')
-const {returnEndpoints} =  require('../models/api.models')
 const {selectArticles } = require('../models/articles.models')
 const {selectCommentsByArticleId}=require("../models/comments.models")
-
+const fs = require('fs/promises')
 
 
     
@@ -10,13 +9,15 @@ const {selectCommentsByArticleId}=require("../models/comments.models")
 
 exports.getDescription = (req, res, next) => {
  
-    
-    returnEndpoints().then((endPoint)=>{
-        
-        res.status(200).send({ "available-endpoints": endPoint })
+  
+
+     return fs.readFile(`${__dirname}/../endpoints.json`,'utf8').then((data)=>{
+        const endPoints= JSON.parse(data);
+        res.status(200).send({ "available-endpoints" : endPoints })
 
     }) 
     .catch((err) => {
+        console.log(err)
         next(err)
      })
  
@@ -63,7 +64,6 @@ exports.getArticlesById= (req,res, next)=>{
        })
 }
 
-
 exports.getComments= (req,res,next)=>{
     
     const articleId= req.params.article_id;
@@ -74,4 +74,13 @@ exports.getComments= (req,res,next)=>{
     .catch((err) => {
                         next(err)
                      })
+}
+
+
+
+//----------------------------Post-----------------------------------
+
+exports.postComment=(req,res)=>{
+    const comment= req.body;
+
 }

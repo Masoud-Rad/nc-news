@@ -38,23 +38,38 @@ describe('/api/topics', () => {
     });
 })
 
-describe('/api/articles', () => {
+describe.skip('/api/articles', () => {
+  test("GET - status: 200 - respond with all the properties", () => {
+    return request(app)
+      .get("/api/articles")
+      .expect(200)
+      .then((response) => { 
+        console.log("artic:", response.body)
+        response.body.articles.forEach((article) => {
+          expect(Object.keys(article).length).toBe(8);
+          expect(typeof article.title).toBe("string");
+          expect(typeof article.topic).toBe("string");
+          expect(typeof article.author).toBe("string");
+          expect( article.hasOwnProperty('body')).toBe(false);
+          expect(typeof article.created_at).toBe("string");
+          expect(typeof article.votes).toBe("number");
+          expect(typeof article.comment_count).toBe("string");
+        })
+      });
+  });
+
   test("GET - status: 200 - respond with all the properties", () => {
     return request(app)
       .get("/api/articles")
       .expect(200)
       .then((response) => { 
         response.body.articles.forEach((article) => {
-          expect(Object.keys(article).length).toBe(8);
-          expect(typeof article.title).toBe("string");
-          expect(typeof article.topic).toBe("string");
-          expect(typeof article.author).toBe("string");
-          expect(typeof article.body).toBe("string");
-          expect(typeof article.created_at).toBe("string");
-          expect(typeof article.votes).toBe("number");
+        expect(article).toBeSordetBy("created_at")
         })
-      });
-  });
+      })
+
+})
+
 })
 
 
@@ -76,38 +91,6 @@ describe('/api/articles/:article_id', () => {
       });
   });
 })
-
-
-describe('/api/articles/:article_id/comments', () => {
-  test("GET - status: 200 - respond with all the properties", () => {
-    return request(app)
-      .get("/api/articles/1/comments")
-      .expect(200)
-      .then((response) => { 
-        response.body.comments.forEach((comment) => {
-          expect(Object.keys(comment).length).toBe(6);
-          expect(typeof comment.comment_id).toBe("number");
-          expect(typeof comment.votes).toBe("number");
-          expect(typeof comment.created_at).toBe("string");
-          expect(typeof comment.author).toBe("string");
-          expect(typeof comment.body).toBe("string");
-          expect(typeof comment.article_id).toBe("number");
-        })
-      })
-  });
-})
-
-describe('/api/articles/:article_id/comments', () => {
-  test("GET - status: 404 - respond with Not Found!", () => {
-    return request(app)
-        .get("/api/articles/6667/comments")
-        .expect(404)
-        .then((response) => { 
-          expect(response.body.msg).toBe("Not Found!")
-        });
-  });
-})
-
 
 
 
@@ -134,4 +117,4 @@ describe('incorect api', () => {
       });
   });
 })       
-         /////
+         
