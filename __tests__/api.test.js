@@ -58,19 +58,20 @@ describe('/api/articles', () => {
       });
   });
 
-//   test("GET - status: 200 - respond with all the properties", () => {
-//     return request(app)
-//       .get("/api/articles")
-//       .expect(200)
-//       .then((response) => { 
-//         response.body.articles.forEach((article) => {
-//         expect(article).toBeSordetBy("created_at")
-//         })
-//       })
+  test.only("GET - status: 200 - respond with all the properties", () => {
+    return request(app)
+      .get("/api/articles")
+      .expect(200)
+      .then((response) => { 
+        console.log(response.body.articles)
+       
+        expect(response.body.articles).toBeSortedBy("created_at", { descending: true})
+       
+      })
 
 })
 
-
+})
 
 
 describe('/api/articles/:article_id', () => {
