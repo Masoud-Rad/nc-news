@@ -31,6 +31,15 @@ app.use((error, req, res, next) => {
     }
     
 })
+app.use((error, req, res, next) => {
+    if(error.code==="23503")
+    {
+        res.status(203).send({ msg: "Non-Authoritative Information" })
+    }else{
+        next(error)
+    }
+    
+})
 
 
 app.use((error, req, res, next) => {

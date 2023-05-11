@@ -1,9 +1,8 @@
 const {selectTopics } = require('../models/topics.models')
 
-const {selectCommentsByArticleId}=require("../models/comments.models")
+const {selectCommentsByArticleId, addComment}=require("../models/comments.models")
 const fs = require('fs/promises')
 
-const {returnEndpoints} =  require('../models/api.models')
 const {selectArticles, selectArticlesBiId } = require('../models/articles.models')
 
 
@@ -85,7 +84,16 @@ exports.getComments= (req,res,next)=>{
 
 //----------------------------Post-----------------------------------
 
-exports.postComment=(req,res)=>{
-    const comment= req.body;
-
+exports.postComment=(req,res,next)=>{
+    const newComment= req.body;
+    const articleId= req.params.article_id;
+    addComment(newComment, articleId).then((comment)=>{
+        res.status(201).send({ 'addedComment': comment })
+    }) 
+    .catch((error) => {
+        next(error)
+    })
 }
+
+
+
