@@ -12,6 +12,17 @@ const { expect } = require("@jest/globals");
 beforeEach(() => seed(devData))
 afterAll(() => connection.end())
 
+describe('incorect api', () => {
+  test("GET - status: 404 - not exist", () => {
+    return request(app)
+      .get("/nonsence")
+      .expect(404)
+      .then((response) => { 
+        expect(typeof response).toBe('object');
+        expect(response.body.msg).toBe("Not Found!")
+      });
+  });
+})       
 describe('/api', () => {
   test("GET - status: 200 - respond with all the properties", () => {
     return request(app)
@@ -38,7 +49,7 @@ describe('/api/topics', () => {
     });
 })
 
-describe.skip('/api/articles', () => {
+describe('/api/articles', () => {
   test("GET - status: 200 - respond with all the properties", () => {
     return request(app)
       .get("/api/articles")
@@ -60,20 +71,13 @@ describe.skip('/api/articles', () => {
 
   test("GET - status: 200 - respond with all the properties", () => {
 
- 
     return request(app)
       .get("/api/articles")
       .expect(200)
       .then((response) => { 
-        
-       
         expect(response.body.articles).toBeSortedBy("created_at", { descending: true})
-       
-
       })
-
 })
-
 })
 
 
@@ -110,15 +114,33 @@ describe('request with incorect Id', () => {
   });
 }) 
 
-describe('incorect api', () => {
-  test("GET - status: 404 - not exist", () => {
+     
+describe("POST-comment >>> /api/articles/:article_id/comments", () => {
+  test('POST- status: 201- responds with the added comment', () => {
+      const newComment = {
+          "body": "this is my test_add_comment body",
+          "username": "rogersop"
+      }
+      return request(app)
+          .post('/api/articles/5/comments')
+          .send(newComment).expect(201).then(({ body }) => {
+            expect(body.addedComment.author).toBe("rogersop");
+
+          })
+   })
+
+   test('POST- status: 201- responds with the added comment', () => {
+    const newComment = {
+        "body": "this is my test_add_comment body",
+        "username": "Mas"
+    }
     return request(app)
-      .get("/nonsence")
-      .expect(404)
-      .then((response) => { 
-        expect(typeof response).toBe('object');
-        expect(response.body.msg).toBe("Not Found!")
-      });
-  });
-})       
-         
+        .post('/api/articles/5/comments')
+        .send(newComment)
+        .expect(203)
+        .then(({ body }) => {
+           expect(body.msg).toBe("Non-Authoritative Information");
+
+        })
+})
+})
