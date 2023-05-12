@@ -205,3 +205,19 @@ describe('DELETE - >>>> /api/comments/:comment_id ', () => {
       });
   });
 }) 
+
+describe('/api/users', () => {
+  test("GET - status: 200 - respond with all the properties", () => {
+    return request(app)
+      .get("/api/users")
+      .expect(200)
+      .then((response) => {
+        response.body.users.forEach((user) => {
+          expect(Object.keys(user).length).toBe(3);
+          expect(typeof user.username).toBe("string");
+          expect(typeof user.name).toBe("string");
+          expect(typeof user.avatar_url).toBe("string");
+        })
+      });
+  });
+})
