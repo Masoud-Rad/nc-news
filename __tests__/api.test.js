@@ -185,13 +185,12 @@ describe("PATCH-Article >>> /api/articles/:article_id", () => {
 })
 
 
-describe.only ('DELETE - >>>> /api/comments/:comment_id ', () => {
+describe('DELETE - >>>> /api/comments/:comment_id ', () => {
   test("DELETE - status: 204 , respond with no content", () => {
     return request(app)
     .delete("/api/comments/1")
       .expect(204)
       .then((response) => { 
-        console.log("in the test:", response.body)
         expect(typeof response).toBe('object');
       });
   });
@@ -201,7 +200,6 @@ describe.only ('DELETE - >>>> /api/comments/:comment_id ', () => {
     .delete("/api/comments/nonesense")
       .expect(404)
       .then((response) => { 
-        console.log("in the test:", response.body)
         expect(typeof response).toBe('object');
         expect(response.body.msg).toBe("Not Found!")
       });
