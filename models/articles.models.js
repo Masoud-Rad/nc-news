@@ -1,20 +1,36 @@
 const db = require('../db/connection');
 const { concat } = require('../db/data/test-data/users');
 
-exports.selectArticles= (articleId)=>{
-   
-        return db.query(`
-        SELECT 
-        articles.author,articles.title,articles.article_id,articles.topic,articles.created_at,articles.votes,articles.article_img_url,
-         COUNT(comments.comment_id) as comment_count
-        FROM articles 
-        JOIN comments
-        ON comments.article_id=articles.article_id
-        GROUP BY articles.article_id
-        ORDER BY created_at DESC;
-        `).then(({rows})=>{
+exports.selectArticles= (topic, sort_by="created_at", order_by="DESC")=>{
+   const validSorteQueries= ["title", "topic", "created_at", "votes", "comment_count"]
+
+   if(!validSorteQueries.includes(sort_by)){
+    return Promise.reject({ status: 400, msg: "Bad request" })
+   }
+    let quertStr= `
+    SELECT 
+    articles.author,articles.title,articles.article_id,articles.topic,articles.created_at,articles.votes,articles.article_img_url,
+    COUNT(comments.comment_id) as comment_count
+    FROM articles 
+    LEFT JOIN comments
+    ON comments.article_id=articles.article_id
+    
+    `
+    const quertValues = [];
+    
+    if (topic)
+    {
+        quertStr+= `WHERE articles.topic = $1`
+        quertValues.push(topic)
+    }
+    quertStr += ` GROUP BY articles.article_id ORDER BY ${sort_by} ${order_by};`;
+
+        return db.query(quertStr,quertValues).then(({rows})=>{
+            
              return rows;  } )
 }
+
+//-------------------------------------------------------------------
 
 exports.selectArticlesBiId= (articleId)=>{
         

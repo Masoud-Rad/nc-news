@@ -44,7 +44,9 @@ exports.getTopics= (req,res, next)=>{
 
 exports.getArticles = (req,res, next)=>{
 
-    selectArticles()
+    const { topic, sort_by, order_by } = req.query;
+    
+    selectArticles(topic, sort_by, order_by)
     .then((articles)=>{       
 
                       res.status(200).send({ articles })

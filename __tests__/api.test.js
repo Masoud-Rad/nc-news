@@ -69,17 +69,71 @@ describe('/api/articles', () => {
           expect(typeof article.comment_count).toBe("string");
         })
       });
-  });
-
-  test("GET - status: 200 - respond with all the properties", () => {
-
-    return request(app)
-      .get("/api/articles")
-      .expect(200)
-      .then((response) => { 
-        expect(response.body.articles).toBeSortedBy("created_at", { descending: true})
+    })
+      
+        test("GET - status: 200 - respond with all the properties", () => {
+      
+          return request(app)
+            .get("/api/articles")
+            .expect(200)
+            .then((response) => { 
+              expect(response.body.articles).toBeSortedBy("created_at", { descending: true})
+            })
       })
-})
+ 
+    test("GET - status: 200 - respond with all the properties", () => {
+      return request(app)
+        .get("/api/articles?topic=mitch")
+        .expect(200)
+        .then((response) => { 
+  
+          response.body.articles.forEach((article) => {
+            expect(Object.keys(article).length).toBe(8);
+            expect(typeof article.title).toBe("string");
+            expect(typeof article.topic).toBe("string");
+            expect(article.topic).toBe("mitch");
+            expect(typeof article.author).toBe("string");
+            expect( article.hasOwnProperty('body')).toBe(false);
+            expect(typeof article.created_at).toBe("string");
+            expect(typeof article.votes).toBe("number");
+            expect(typeof article.comment_count).toBe("string");
+          })
+        });
+    });
+
+    test("GET - status: 200 - respond with all the properties", () => {
+      return request(app)
+        .get("/api/articles?topic=cats")
+        .expect(200)
+        .then((response) => { 
+  
+          response.body.articles.forEach((article) => {
+            
+            expect(article.topic).toBe("cats");
+            
+          })
+        });
+    });
+
+    test("GET - status: 200 - check is result is sorted", () => {
+      
+      return request(app)
+        .get("/api/articles?topic=mitch&sort_by=title&order_by=ASC")
+        .expect(200)
+        .then((response) => { 
+          expect(response.body.articles).toBeSortedBy("title", { ascending: true, coerce: false})
+        })
+      })
+
+      test("GET - status: 200 - check is result is sorted", () => {
+      
+        return request(app)
+          .get("/api/articles?topic=mitch&sort_by=id&order_by=ASC")
+          .expect(400)
+          .then((response) => { 
+            expect(response.body.msg).toBe("Bad request")
+          })
+        })
 })
 
 
@@ -198,7 +252,15 @@ describe('DELETE - >>>> /api/comments/:comment_id ', () => {
     .delete("/api/comments/nonesense")
       .expect(404)
       .then((response) => { 
-        expect(typeof response).toBe('object');
+        expect(response.body.msg).toBe("Not Found!")
+      });
+  });
+
+  test("DELETE - status: 404 , respond with Not Found", () => {
+    return request(app)
+    .delete("/api/comments/999999")
+      .expect(404)
+      .then((response) => { 
         expect(response.body.msg).toBe("Not Found!")
       });
   });
