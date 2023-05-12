@@ -5,5 +5,5 @@
 
   SELECT 
        *
-        FROM articles 
+        FROM comments 
         ;

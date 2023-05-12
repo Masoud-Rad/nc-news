@@ -12,7 +12,7 @@ const { expect } = require("@jest/globals");
 beforeEach(() => seed(devData))
 afterAll(() => connection.end())
 
-describe('incorect api', () => {
+describe('incorect api/getApi', () => {
   test("GET - status: 404 - not exist", () => {
     return request(app)
       .get("/nonsence")
@@ -23,10 +23,10 @@ describe('incorect api', () => {
       });
   });
 })       
-describe('/api', () => {
+describe('/api/getApi', () => {
   test("GET - status: 200 - respond with all the properties", () => {
     return request(app)
-      .get("/api")
+      .get("/api/getApi")
       .expect(200)
       .then((response) => { 
         expect(typeof response).toBe('object');
@@ -181,3 +181,27 @@ describe("PATCH-Article >>> /api/articles/:article_id", () => {
 })
 
 })
+
+
+describe.only ('DELETE - >>>> /api/comments/:comment_id ', () => {
+  test("DELETE - status: 204 , respond with no content", () => {
+    return request(app)
+    .delete("/api/comments/1")
+      .expect(204)
+      .then((response) => { 
+        console.log("in the test:", response.body)
+        expect(typeof response).toBe('object');
+      });
+  });
+
+  test("DELETE - status: 404 , respond with Not Found", () => {
+    return request(app)
+    .delete("/api/comments/nonesense")
+      .expect(404)
+      .then((response) => { 
+        console.log("in the test:", response.body)
+        expect(typeof response).toBe('object');
+        expect(response.body.msg).toBe("Not Found!")
+      });
+  });
+}) 
