@@ -2,11 +2,11 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
-const {getDescription, getTopics , getArticles, getArticlesById, getComments, postComment, patchArticle } = require ("./controllers/api.controllers")
+const {getDescription, getTopics , getArticles, getArticlesById, getComments, postComment, patchArticle, deleteComment } = require ("./controllers/api.controllers")
 
 //----------------------------------------------Get-------------------------------------------------
 
-app.get('/api', getDescription);
+app.get('/api/getApi', getDescription);
 
 app.get("/api/topics",getTopics);
 
@@ -23,6 +23,10 @@ app.post("/api/articles/:article_id/comments",postComment)
 //----------------------------------------------Patch-------------------------------------------------
 
 app.patch('/api/articles/:article_id', patchArticle)
+
+//----------------------------------------------Delete------------------------------------------------
+
+app.delete("/api/comments/:comment_id", deleteComment)
 
 //----------------------------------------------Error handeling---------------------------------------
 
@@ -45,7 +49,6 @@ app.use((error, req, res, next) => {
     
 })
 
-
 app.use((error, req, res, next) => {
     res.status(error.status).send({ msg: error.msg })
 })
@@ -53,7 +56,6 @@ app.use((error, req, res, next) => {
 app.all("*", (req,res)=>{
     res.status(404).send({ msg: "Not Found!" })
 })
-
 
 app.use((error, req, res, next) => {
     res.status(500).send({ msg: "Server Error!" })
