@@ -12,7 +12,7 @@ const { expect } = require("@jest/globals");
 beforeEach(() => seed(devData))
 afterAll(() => connection.end())
 
-describe('incorect api', () => {
+describe('incorect path', () => {
   test("GET - status: 404 - not exist", () => {
     return request(app)
       .get("/nonsence")

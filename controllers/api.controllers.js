@@ -1,5 +1,5 @@
 const {selectTopics } = require('../models/topics.models')
-
+const {selectUsers } = require('../models/users.models')
 const {selectCommentsByArticleId, addComment}=require("../models/comments.models")
 const fs = require('fs/promises')
 
@@ -80,7 +80,19 @@ exports.getComments= (req,res,next)=>{
                      })
 }
 
+exports.getUsers = (req,res, next)=>{
 
+    selectUsers()
+    .then((users)=>{       
+
+                      res.status(200).send({ users })
+
+                    })
+    .catch((err) => {
+                        next(err)
+                     })
+
+}
 
 //----------------------------Post-----------------------------------
 
