@@ -1,9 +1,10 @@
 const {selectTopics } = require('../models/topics.models')
 const {selectUsers } = require('../models/users.models')
-const {selectCommentsByArticleId, addComment}=require("../models/comments.models")
+const {selectCommentsByArticleId, addComment, removeComment}=require("../models/comments.models")
+const {selectArticles, selectArticlesBiId,updateArticle } = require('../models/articles.models')
+
 const fs = require('fs/promises')
 
-const {selectArticles, selectArticlesBiId,updateArticle } = require('../models/articles.models')
 
 
 
@@ -121,3 +122,19 @@ exports.patchArticle=(req,res,nest)=>{
     })
 
 }
+
+
+//-------------------------Delete--------------------------------------
+
+
+
+exports.deleteComment=((req,res,next)=>{
+    const commentId = req.params.comment_id;
+    removeComment(commentId).then(()=>{
+        res.sendStatus(204)
+    }) 
+     .catch((error)=>{
+        next(error);
+    })
+})
+

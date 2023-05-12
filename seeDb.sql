@@ -5,5 +5,5 @@
 
   SELECT 
        *
-        FROM users 
+        FROM articles 
         ;
