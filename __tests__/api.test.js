@@ -125,7 +125,7 @@ describe('/api/articles', () => {
         })
       })
 
-      test("GET - status: 200 - check is result is sorted", () => {
+      test("GET - status: 400 - Bad request", () => {
       
         return request(app)
           .get("/api/articles?topic=mitch&sort_by=id&order_by=ASC")
