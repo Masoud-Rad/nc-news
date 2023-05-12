@@ -86,25 +86,21 @@ describe('/api/articles', () => {
 describe('/api/articles/:article_id', () => {
   test("GET - status: 200 - respond with all the properties", () => {
     return request(app)
-      .get("/api/articles/3")
+      .get("/api/articles/1")
       .expect(200)
       .then((response) => { 
         
-          expect(Object.keys(response.body.article).length).toBe(8);
+          expect(Object.keys(response.body.article).length).toBe(9);
           expect(typeof response.body.article.title).toBe("string");
           expect(typeof response.body.article.topic).toBe("string");
           expect(typeof response.body.article.author).toBe("string");
           expect(typeof response.body.article.body).toBe("string");
           expect(typeof response.body.article.created_at).toBe("string");
           expect(typeof response.body.article.votes).toBe("number");
-        
+          expect(typeof response.body.article.comment_count).toBe("string");
       });
   });
-})
 
-
-
-describe('request with incorect Id', () => {
   test("GET - status: 404 - respond with Not Found!", () => {
     return request(app)
       .get("/api/articles/nnnn")
@@ -114,7 +110,9 @@ describe('request with incorect Id', () => {
         expect(response.body.msg).toBe("Not Found!")
       });
   });
-}) 
+})
+
+
 
      
 describe("POST-comment >>> /api/articles/:article_id/comments", () => {
