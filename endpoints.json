@@ -25,5 +25,8 @@
         }
       ]
     }
-  }
+  },
+  "Get /api/articles/:article_id": {},
+  "Get /api/articles/:article_id/comments": {},
+  "Get /api/users": {}
 }
