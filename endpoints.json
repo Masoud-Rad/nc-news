@@ -1,5 +1,5 @@
 {
-  "GET /api": {
+  "GET /api/getApi": {
     "description": "serves up a json representation of all the available endpoints of the api"
   },
   "GET /api/topics": {
@@ -10,11 +10,26 @@
     }
   },
   "GET /api/articles": {
-    "description": "serves an array of all topics",
-    "queries": ["author", "topic", "sort_by", "order"],
+    "description": "serves an array of all articles which can sotred or filteredgit ",
+    "queries": ["topic", "sort_by", "order"],
     "exampleResponse": {
       "articles": [
         {
+          "title": "Seafood substitutions are increasing",
+          "topic": "cooking",
+          "author": "weegembump",
+          "created_at": "2018-05-30T15:59:13.341Z",
+          "votes": 0,
+          "comment_count": 6
+        }
+      ]
+    }
+  },
+  "Get /api/articles/:article_id": {
+    "description": "serves an array of an article with ID ",
+    "parametr": ["article_id"],
+    "exampleResponse": {
+      "article": {
           "title": "Seafood substitutions are increasing",
           "topic": "cooking",
           "author": "weegembump",
@@ -23,10 +38,56 @@
           "votes": 0,
           "comment_count": 6
         }
+    }
+
+  },
+  "Get /api/articles/:article_id/comments": {},
+
+  "Get /api/users": {
+    "description": "serves an array of all users",
+    "exampleResponse": {
+      "users": [
+        {
+          "username": "tickle122",
+          "name": "Tom Tickle",
+          "avatar_url":
+            "https://vignette.wikia.nocookie.net/mrmen/images/d/d6/Mr-Tickle-9a.png/revision/latest?cb=20180127221953"
+        }
       ]
     }
   },
-  "Get /api/articles/:article_id": {},
-  "Get /api/articles/:article_id/comments": {},
-  "Get /api/users": {}
+  "Post /api/articles/:article_id/comments": {
+    "description": "Post an comment for specefic article ",
+    "parametr": ["article_id"],
+    "exampleResponse": {
+      "comment":   {
+        "body": "this is my test_add_comment body",
+        "username": "Mas"
+        }
+    }
+
+  },
+  "Patch /api/articles/:article_id": {
+    "description": "Patch specefic article ",
+    "parametr": ["article_id"],
+    "exampleResponse": {
+      "article": {
+        "title": "Seafood substitutions are increasing",
+        "topic": "cooking",
+        "author": "weegembump",
+        "body": "Text from the article..",
+        "created_at": "2018-05-30T15:59:13.341Z",
+        "votes": 0,
+        "comment_count": 6
+      }
+    }
+  },
+  "Delete /api/comments/:comment_id": {},
+
 }
+
+
+
+
+
+
