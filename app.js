@@ -1,3 +1,4 @@
+const cors = require('cors');
 const express = require("express");
 const app = express();
 app.use(express.json());
@@ -7,6 +8,8 @@ const {getDescription, getTopics , getArticles, getArticlesById, getComments, po
 
 
 //----------------------------------------------Get-------------------------------------------------
+
+app.use(cors());
 
 app.get('/api/getApi', getDescription);
 
