@@ -41,7 +41,21 @@
     }
 
   },
-  "Get /api/articles/:article_id/comments": {},
+  "Get /api/articles/:article_id/comments": {
+    "description": "serves an array of a specefic article's comments ",
+    "parametr": ["article_id"],
+    "exampleResponse": {
+      "comments": [
+        {
+          "body": "Itaque quisquam est similique et est perspiciatis reprehenderit voluptatem autem. Voluptatem accusantium eius error adipisci quibusdam doloribus.",
+          "votes": -1,
+         "author": "tickle122",
+          "article_id": 18,
+          "created_at": 1590103140000
+        }
+      ]
+    }
+  },
 
   "Get /api/users": {
     "description": "serves an array of all users",
