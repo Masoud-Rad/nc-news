@@ -59,6 +59,7 @@
 
   "Get /api/users": {
     "description": "serves an array of all users",
+    "queries": ["username"],
     "exampleResponse": {
       "users": [
         {
@@ -70,6 +71,8 @@
       ]
     }
   },
+
+
   "Post /api/articles/:article_id/comments": {
     "description": "Post an comment for specefic article ",
     "parametr": ["article_id"],

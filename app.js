@@ -23,6 +23,7 @@ app.get('/api/articles/:article_id/comments',getComments)
 
 app.get("/api/users",getUsers);
 
+
 //----------------------------------------------Post-------------------------------------------------
 
 app.post("/api/articles/:article_id/comments",postComment)

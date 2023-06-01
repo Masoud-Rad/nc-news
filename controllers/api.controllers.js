@@ -84,8 +84,8 @@ exports.getComments= (req,res,next)=>{
 }
 
 exports.getUsers = (req,res, next)=>{
-
-    selectUsers()
+    const { username } = req.query;
+    selectUsers(username)
     .then((users)=>{       
 
                       res.status(200).send({ users })
