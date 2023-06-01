@@ -283,14 +283,25 @@ describe('/api/users', () => {
 
   test("GET - status: 200 - respond with a user", () => {
     return request(app)
-      .get("/api/users?username=tickle122")
+      .get("/api/users?username=rogersop")
       .expect(200)
       .then((response) => {
-        
-          expect(Object.keys(user).length).toBe(3);
-          expect(typeof response.body.user.username).toBe("string");
-          expect(typeof response.body.user.name).toBe("string");
-          expect(typeof response.body.user.avatar_url).toBe("string");
+      
+          expect(Object.keys(response.body.users).length).toBe(3);
+          expect(typeof response.body.users.username).toBe("string");
+          expect(typeof response.body.users.name).toBe("string");
+          expect(typeof response.body.users.avatar_url).toBe("string");
+
+      });
+  });
+
+
+  test("GET - status: 200 - respond with a user", () => {
+    return request(app)
+      .get("/api/users?username=bbbbbbbbbbbbbb676")
+      .expect(404)
+      .then((response) => { 
+        expect(response.body.msg).toBe("Not Found!")
 
       });
   });
