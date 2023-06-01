@@ -280,4 +280,18 @@ describe('/api/users', () => {
         })
       });
   });
+
+  test("GET - status: 200 - respond with a user", () => {
+    return request(app)
+      .get("/api/users?username=tickle122")
+      .expect(200)
+      .then((response) => {
+        
+          expect(Object.keys(user).length).toBe(3);
+          expect(typeof response.body.user.username).toBe("string");
+          expect(typeof response.body.user.name).toBe("string");
+          expect(typeof response.body.user.avatar_url).toBe("string");
+
+      });
+  });
 })
