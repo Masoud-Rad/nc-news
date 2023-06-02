@@ -4,7 +4,7 @@ const app = express();
 app.use(express.json());
 
 
-const {getDescription, getTopics , getArticles, getArticlesById, getComments, postComment, patchArticle, deleteComment, getUsers } = require ("./controllers/api.controllers")
+const {getDescription, getTopics , getArticles, getArticlesById, getComments, postComment, patchArticle, deleteComment, getUsers, patchComment } = require ("./controllers/api.controllers")
 
 
 //----------------------------------------------Get-------------------------------------------------
@@ -32,6 +32,7 @@ app.post("/api/articles/:article_id/comments",postComment)
 
 app.patch('/api/articles/:article_id', patchArticle)
 
+app.patch('/api/comments/:comment_id', patchComment)
 //----------------------------------------------Delete------------------------------------------------
 
 app.delete("/api/comments/:comment_id", deleteComment)

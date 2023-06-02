@@ -1,6 +1,6 @@
 const {selectTopics } = require('../models/topics.models')
 const {selectUsers } = require('../models/users.models')
-const {selectCommentsByArticleId, addComment, removeComment}=require("../models/comments.models")
+const {selectCommentsByArticleId, addComment, removeComment, updateComment}=require("../models/comments.models")
 const {selectArticles, selectArticlesBiId,updateArticle } = require('../models/articles.models')
 
 const fs = require('fs/promises')
@@ -39,7 +39,6 @@ exports.getTopics= (req,res, next)=>{
     .catch((err) => {
                         next(err)
                      })
-
 }
 
 exports.getArticles = (req,res, next)=>{
@@ -112,7 +111,7 @@ exports.postComment=(req,res,next)=>{
 
 //---------------------------Patch-----------------------------------
 
-exports.patchArticle=(req,res,nest)=>{
+exports.patchArticle=(req,res,next)=>{
     const articleId = req.params.article_id;
     const votesUpdate= req.body.inc_votes;
     updateArticle(articleId, votesUpdate).then((updatedArticle)=>{
@@ -122,7 +121,19 @@ exports.patchArticle=(req,res,nest)=>{
     .catch((error)=>{
         next(error);
     })
+}
 
+exports.patchComment=(req,res,next)=>{
+    const commentId = req.params.comment_id;
+    const votesUpdate= req.body.inc_votes;
+    updateComment(commentId, votesUpdate).then((updatedComment)=>{
+        
+        res.status(202).send({updatedComment})
+    }) 
+
+    .catch((error)=>{
+        next(error);
+    })
 }
 
 

@@ -264,6 +264,18 @@ describe('DELETE - >>>> /api/comments/:comment_id ', () => {
         expect(response.body.msg).toBe("Not Found!")
       });
   });
+
+  describe("PATCH-Comment >>> /comments/:comment_id", () => {
+    test("PATCH- status: 202- responds with the updated Comment's votes", () => {
+        const votesUpdate = { inc_votes : 1 };
+        return request(app)
+            .patch('/api/comments/1')
+            .send(votesUpdate).expect(202).then(({ body }) => {
+              console.log(body)
+              expect(body.updatedComment.votes).toBe(17);
+  
+            })
+     })
 }) 
 
 describe('/api/users', () => {
@@ -305,4 +317,5 @@ describe('/api/users', () => {
 
       });
   });
+})
 })

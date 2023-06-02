@@ -99,7 +99,8 @@
       }
     }
   },
-  "Delete /api/comments/:comment_id": {}
+  "Delete /api/comments/:comment_id": {},
+  "Patch /api/comments/:comment_id": {}
 
 }
 

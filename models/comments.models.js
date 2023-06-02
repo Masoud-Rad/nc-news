@@ -48,3 +48,31 @@ WHERE comment_id=$1 RETURNING *;`, [commentId]).then(({rows})=>{
 })
 
  }
+
+
+ exports.updateComment=(commentId, votesUpdate)=>{
+
+ return db.query(`
+        SELECT * FROM comments WHERE comment_id= $1;
+        `,[commentId])
+    .then(({rows})=>{
+        const comment=rows[0];
+        const currentVotes= comment.votes;
+
+        const updatedVotes = currentVotes + votesUpdate;
+
+        return db.query(`
+            UPDATE comments
+            SET
+            votes= $1
+            WHERE comment_id = $2
+            RETURNING *;
+            `,[updatedVotes,commentId]).then(({rows})=>{
+            return (rows[0]);
+        })
+
+
+    })
+    
+
+ }
