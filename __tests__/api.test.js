@@ -271,7 +271,6 @@ describe('DELETE - >>>> /api/comments/:comment_id ', () => {
         return request(app)
             .patch('/api/comments/1')
             .send(votesUpdate).expect(202).then(({ body }) => {
-              console.log(body)
               expect(body.updatedComment.votes).toBe(17);
   
             })
