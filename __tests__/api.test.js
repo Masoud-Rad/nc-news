@@ -15,11 +15,11 @@ afterAll(() => connection.end())
 
 
 describe('incorect api/getApi', () => {
-  test("GET - status: 404 - not exist", () => {
+  test.only("GET - status: 404 - not exist", () => {
     return request(app)
       .get("/nonsence")
       .expect(404)
-      .then((response) => { 
+      .then((response) => {
         expect(typeof response).toBe('object');
         expect(response.body.msg).toBe("Not Found!")
       });

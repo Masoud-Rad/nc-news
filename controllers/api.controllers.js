@@ -22,7 +22,7 @@ exports.getDescription = (req, res, next) => {
 
     }) 
     .catch((err) => {
-        console.log(err)
+        console.error("error in getDescription contrloller", err)
         next(err)
      })
  
