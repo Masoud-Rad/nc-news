@@ -7,7 +7,7 @@
 
 <br/>
 
-This repo is a RESTful API that serves as the backend architecture for a Reddit-style Northcoders News Web Application. It is built using [**Node.js**](https://nodejs.org/) and [**Express.js**](https://expressjs.com/) and uses [**PostgreSQL**](https://www.postgresql.org/) as its database. The API allows users to interact with the application by performing full CRUD (Create, Read, Update, Delete) operations on articles, comments, and users.
+This repo is a RESTful API that serves as the backend architecture for a Reddit-style News Web Application. It is built using [**Node.js**](https://nodejs.org/) and [**Express.js**](https://expressjs.com/) and uses [**PostgreSQL**](https://www.postgresql.org/) as its database. The API allows users to interact with the application by performing full CRUD (Create, Read, Update, Delete) operations on articles, comments, and users.
 
 <br/>
 
