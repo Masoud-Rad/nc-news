@@ -14,7 +14,7 @@ This repo is a RESTful API that serves as the backend architecture for a Reddit-
 This API will serve as the backend for a frontend project built with [***React.js***](https://react.dev/).
 <br/><br/>
 
-A live version of this app is available [**here**](https://nc-news-gs.onrender.com/api), hosted with Render. A list of available endpoints can be found [**here**](#api-endpoints).
+A live version of this app is available [**here**](https://nc-news-gs.onrender.com/api), hosted with Render. A list of available endpoints can be found using this endpoint: [**here**](#api/getApi).
 <br/><br/>
 
 
