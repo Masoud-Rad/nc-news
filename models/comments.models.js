@@ -27,18 +27,14 @@ exports.addComment = (newComment, articleId ) => {
      (body, article_id, author) VALUES ($1,$2,$3) RETURNING *;`
              , [body, articleId, author]).then((result) => {
                return result.rows[0]
-             })
-             
+             })      
      }
      else {
          return Promise.reject({ status: 400, msg: "bad request!" })
- 
      }
  };
 
  exports.removeComment = (commentId ) => {
-
-
     return db.query(`
     DELETE FROM comments
 WHERE comment_id=$1 RETURNING *;`, [commentId]).then(({rows})=>{

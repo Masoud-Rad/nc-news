@@ -23,6 +23,7 @@ exports.selectArticles= (topic, sort_by="created_at", order_by="DESC")=>{
         quertStr+= `WHERE articles.topic = $1`
         quertValues.push(topic)
     }
+    
     quertStr += ` GROUP BY articles.article_id ORDER BY ${sort_by} ${order_by};`;
 
         return db.query(quertStr,quertValues).then(({rows})=>{

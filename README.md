@@ -1,4 +1,4 @@
-# Northcoders News API
+# NC-News API
 
 ## Project Overview
 ### **Tech Stack** Javascript, Expres.js, Node.js, PostgreSQL

@@ -125,7 +125,7 @@ describe('/api/articles', () => {
         })
       })
 
-      test("GET - status: 400 - Bad request", () => {
+    test("GET - status: 400 - Bad request", () => {
       
         return request(app)
           .get("/api/articles?topic=mitch&sort_by=id&order_by=ASC")
@@ -136,14 +136,12 @@ describe('/api/articles', () => {
         })
 })
 
-
 describe('/api/articles/:article_id', () => {
   test("GET - status: 200 - respond with all the properties", () => {
     return request(app)
       .get("/api/articles/1")
       .expect(200)
       .then((response) => { 
-        
           expect(Object.keys(response.body.article).length).toBe(9);
           expect(typeof response.body.article.title).toBe("string");
           expect(typeof response.body.article.topic).toBe("string");
@@ -165,8 +163,6 @@ describe('/api/articles/:article_id', () => {
       });
   });
 })
-
-
 
      
 describe("POST-comment >>> /api/articles/:article_id/comments", () => {
@@ -199,7 +195,6 @@ describe("POST-comment >>> /api/articles/:article_id/comments", () => {
         })
 })
 })
-
 
 
 describe("PATCH-Article >>> /api/articles/:article_id", () => {
